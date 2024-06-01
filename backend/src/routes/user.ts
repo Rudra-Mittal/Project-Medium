@@ -10,7 +10,8 @@ export const userRouter = new Hono<{
         JWT_SECRET: string;
     }
     Variables: {
-        prisma: PrismaClient
+        prisma: PrismaClient;
+        error:any;
     }
 }>();
 userRouter.use("*",async(c,next)=>{
@@ -28,18 +29,25 @@ userRouter.post('/signup', async (c) => {
     c.status(400);
     return c.json({error:error.message});
   }
-  const body = await c.req.json();
+  try{const body = await c.req.json();
   const prisma = c.get("prisma");
     const user = await prisma.user.create({
       data: {
+        name:body.name,
         email: body.email,
         password: body.password,
       },
     });
-    const token = await sign({ id: user.id }, c.env.JWT_SECRET)
-    return c.json({
-      jwt: token
-    })
+      const token = await sign({ id: user.id }, c.env.JWT_SECRET)
+      return c.json({
+        jwt: token
+      })
+  }
+    catch(error){
+      c.status(401);
+      // @ts-ignore
+      return c.json({error:error.message});
+    }
 })
   
 userRouter.post('/signin', async (c) => {
