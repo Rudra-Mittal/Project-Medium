@@ -17,7 +17,7 @@ export const MainBlogCard = ({ id,authorImg,name,title,content,date }: BlogCardP
                     posted on {date.toDateString().slice(3)}
                 </div>
                 <div className="text-2xl  p-3/4 text-justify leading-relaxed">
-                     {content}
+                <div className="text-small p-3/4" dangerouslySetInnerHTML={{ __html: content }} />
                 </div>
            </div>
            <div className="invisible lg:visible lg:col-span-4 ml-3 flex flex-col">

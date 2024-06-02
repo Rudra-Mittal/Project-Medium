@@ -14,7 +14,6 @@ export const useBlogHook = () => {
             },
            
         }).then((res) => {
-            console.log(res);
             setBlogData(res.data);
             setLoading(false);
         }

@@ -20,17 +20,20 @@ export const BlogCard = ({authorImg,name,title,content,date,id}:BlogCardProps) =
             <div className="text-2xl font-black">
                 {title}
             </div>
-            <div className="text-small  p-3/4">
-                {(content.length>100)?content.slice(0, 100)+"...":content}
-            </div>
+                {(content.length>100)?
+                <div className="text-small  p-3/4" dangerouslySetInnerHTML={{ __html: content.slice(0,100)+"..." }}>
+            </div>:
+            <div className="text-small  p-3/4" dangerouslySetInnerHTML={{ __html: content }}>
+            </div>}
+            
             <div className="footer pb-3">
-                {Math.floor(content.length/100)+"min read"}
+                {Math.floor(content.length/300)+"min read"}
             </div>
         </div></Link>
     )
 }
 
 export function Avatar({imgLink}:any){
-    console.log(imgLink);
-    return <img className="w-11 h-11 p-1 inline  rounded-full" src={imgLink} alt="Bordered avatar"></img>
+    // console.log(imgLink);
+    return <img className="w-11 h-11 p-1  inline  rounded-full" src={imgLink} alt="Bordered avatar"></img>
 }

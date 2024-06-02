@@ -12,13 +12,13 @@ export const Form = ({ type }: { type: "signup" | "signin" }) => {
         email: "",
         password: ""
     })
+    const navigate = useNavigate();
     async function handleSubmit() {
         try {
             console.log(`${BACKEND_URL}/api/v1/user/${type}`);
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, inputs);
             localStorage.setItem("Authorization",res.data.jwt);
             console.log(res);
-            const navigate = useNavigate();
             navigate("/blog");
         } catch (e) {
             console.log(e);
