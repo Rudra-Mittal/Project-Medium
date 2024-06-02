@@ -1,8 +1,10 @@
 import { ChangeEvent } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Signup } from "@rudra_mittal/input-validation"
 import axios from "axios"
+import { BACKEND_URL } from "./config"
 
 export const Form = ({ type }: { type: "signup" | "signin" }) => {
     const [inputs, setInputs] = useState<Signup>({
@@ -12,10 +14,12 @@ export const Form = ({ type }: { type: "signup" | "signin" }) => {
     })
     async function handleSubmit() {
         try {
-            const res = await axios.post(`http://localhost:8787/api/v1/user/${type}`, inputs);
+            console.log(`${BACKEND_URL}/api/v1/user/${type}`);
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, inputs);
             localStorage.setItem("Authorization",res.data.jwt);
             console.log(res);
-            return res;
+            const navigate = useNavigate();
+            navigate("/blog");
         } catch (e) {
             console.log(e);
         }
