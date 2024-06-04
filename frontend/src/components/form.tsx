@@ -5,28 +5,46 @@ import { useNavigate } from "react-router-dom"
 import { Signup } from "@rudra_mittal/input-validation"
 import axios from "axios"
 import { BACKEND_URL } from "./config"
-
+import { useRecoilState } from "recoil"
+import { userStateAtom } from "../Store/atom"
 export const Form = ({ type }: { type: "signup" | "signin" }) => {
     const [inputs, setInputs] = useState<Signup>({
         name: "",
         email: "",
         password: ""
     })
+    const [userState, setUserState] = useRecoilState(userStateAtom);
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
     async function handleSubmit() {
-        try {
-            console.log(`${BACKEND_URL}/api/v1/user/${type}`);
+        try{
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, inputs);
-            localStorage.setItem("Authorization",res.data.jwt);
-            console.log(res);
-            navigate("/blog");
-        } catch (e) {
-            console.log(e);
-        }
+            localStorage.setItem("Authorization", res.data.jwt);
+
+        // console.log(`${BACKEND_URL}/api/v1/user/${type}`);
+    }catch(e){
+        console.log(e.response.data.error);
+        setError(true);
+        return;
+       
+    }
+        console.log(userState);
+        const user = await axios.get(`${BACKEND_URL}/api/v1/user/info`, {
+            headers: {
+                Authorization: localStorage.getItem("Authorization")
+            }
+        });
+        console.log(user);
+        localStorage.setItem("sign in","true");
+        localStorage.setItem("name", user.data.name);
+        localStorage.setItem("email", user.data.email);
+        localStorage.setItem("id", user.data.id);
+        navigate("/blog");
 
     }
     return (
         <div className="flex flex-col   justify-center ">
+            {(error)?<div className="text-red-500 text-center font-black">{(type=='signin')?"Email or password is incorrect":"User exist, with this email "}</div>:null}
             <div className=" text-4xl  text-center p-3/4 font-black">
                 Create an account
             </div>

@@ -2,8 +2,11 @@ import { BlogCard } from "../components/blogCard"
 import { Appbar } from "../components/appbar"
 import { useBlogHook } from "../components/hooks/blogHook"
 import { Skeleton } from "../components/Blogskeletons"
+// import { ProgressComponent } from "../components/progress"
+import { motion, useScroll, useSpring } from "framer-motion"
 export const Blog=()=>{
-    
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress);
     const {loading,blogData}=useBlogHook();
     if(loading){
 
@@ -18,8 +21,9 @@ export const Blog=()=>{
         )
     }
     return (
-       
-        <div className="w-screen m-auto">
+        <>
+        <div className="w-screen  m-auto">
+        <motion.div className=" origin-left fixed top-0 left-0 right-0 h-1 bg-red-500 " style={{ scaleX }} />  
             <Appbar/>
         <div className="flex flex-col w-fit m-auto">
             {
@@ -28,6 +32,7 @@ export const Blog=()=>{
             )}
         </div>
         </div>
+        </>
     )
 
 }

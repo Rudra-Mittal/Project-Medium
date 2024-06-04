@@ -4,13 +4,15 @@ import 'react-quill/dist/quill.snow.css';
 import { Appbar } from '../components/appbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../components/config';
 // import { BACKEND_URL } from '../config';
 export const CreateBlog=()=> {
   const [value, setValue] = useState('');
   const [title, setTitle] = useState('');
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
         const handlePublish = () => {
-            const res=axios.post(`http://localhost:8787/api/v1/blog`,{
+            const res=axios.post(`${BACKEND_URL}/api/v1/blog`,{
                 title:title,
                 content:value
             },{
@@ -21,13 +23,15 @@ export const CreateBlog=()=> {
             }).then((res)=>{
                 navigate("/blog");
                 console.log(res);
-            }).catch((e)=>{
+            }).catch((e:any)=>{
+                setError(true);
                 console.log(e);
             })
         }
     return (
         <div className='' >
                 <Appbar/>
+                {(error)?<div className="text-red-500 text-center font-black">Title or Content Can not be empty</div>:null}
                 <div className="mb-6 flex flex-row align-center justify-center">
         <input type="text" value={title} onChange={(e)=>{
             setTitle(e.target.value);

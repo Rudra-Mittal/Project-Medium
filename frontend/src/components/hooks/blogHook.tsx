@@ -36,7 +36,29 @@ export const useBlogSingleHook = ({id}:any) => {
             setBlogData(res.data);
             setLoading(false);
         }
-        );
+        ).catch((err)=>{
+            console.log(err);
+            setLoading(false);
+        })
+    }, []);
+    return { blogData, loading };
+}
+export const useSingleUserBlogs = () => {
+    const [blogData, setBlogData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        axios.get(`http://localhost:8787/api/v1/blog`,{
+            headers:{
+                Authorization:localStorage.getItem("Authorization")
+            }
+        }).then((res) => {
+            setBlogData(res.data);
+            setLoading(false);
+        }
+    ).catch((err)=>{
+        console.log(err);
+        setLoading(false);
+        })
     }, []);
     return { blogData, loading };
 }

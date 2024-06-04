@@ -48,6 +48,18 @@ blogRouter.get('/', async (c) => {
             where:{
                 authorId:c.get('userId')
             
+            },
+            select:{
+                id:true,
+                title:true,
+                content:true,
+                createdAt:true,
+                author:{
+                    select:{
+                        name:true
+                    }
+                }
+
             }
         }
     );
@@ -102,6 +114,22 @@ blogRouter.put('/', async (c) => {
 	});
 
 	return c.text('post updated');
+});
+blogRouter.delete('/', async (c) => {
+    const userId = c.get('userId');
+    const prisma = c.get("prisma");
+    const body = await c.req.json();
+    await prisma.post.delete({
+        where: {
+            id: body.id,
+            authorId: userId
+        }
+    }).then(()=>{
+        c.status(200);
+    }).catch((e)=>{
+        c.status(400);
+    })
+    return c.json({message:'post deleted'});
 });
 blogRouter.post("/bulk", async (c) => {
     const {error}= getBlog.safeParse(await c.req.json());

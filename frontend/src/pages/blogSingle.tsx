@@ -23,7 +23,7 @@ export const BlogSingle=()=>{
         
         <div className="w-screen m-auto">
             <Appbar/>
-            <MainBlogCard id={blogData.id} name={blogData.name} authorImg="" title={blogData.title} content={blogData.content} date={(new Date(blogData.createdAt))} />
+            <MainBlogCard id={blogData.id} name={blogData.author.name} authorImg="" title={blogData.title} content={blogData.content} date={(new Date(blogData.createdAt))} />
         </div>
     )
 

@@ -3,7 +3,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { Hono } from "hono";
 import { sign } from "hono/jwt";
 import { signin,signup } from '@rudra_mittal/input-validation';
-
+import {verify} from "hono/jwt";
 export const userRouter = new Hono<{
     Bindings: {
         DATABASE_URL: string;
@@ -72,4 +72,24 @@ userRouter.post('/signin', async (c) => {
 
     const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
     return c.json({ jwt });
+})
+userRouter.get("/info",async(c,next)=>{
+  const prisma = c.get("prisma");
+  const jwt = c.req.header('Authorization');
+  if(!jwt){
+    c.status(401);
+    return c.json({error:"Unauthorized"});
+  }
+  const id=await verify(jwt,c.env.JWT_SECRET);
+  const user = await prisma.user.findUnique({
+    where:{
+      id:id.id
+    },
+    select:{
+      name:true,
+      email:true,
+      id:true,
+    }
+  })
+  return c.json(user);
 })
