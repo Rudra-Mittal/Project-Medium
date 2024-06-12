@@ -4,10 +4,11 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { Signup } from "@rudra_mittal/input-validation"
 import axios from "axios"
-import { BACKEND_URL } from "./config.env"
 import { useRecoilState } from "recoil"
 import { userStateAtom } from "../Store/atom"
+const BACKEND_URL = process.env.BACKEND_URL;
 export const Form = ({ type }: { type: "signup" | "signin" }) => {
+    console.log(BACKEND_URL);
     const [inputs, setInputs] = useState<Signup>({
         name: "",
         email: "",

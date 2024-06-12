@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../config.env";
 import axios from "axios";
+const BACKEND_URL = process.env.BACKEND_URL; 
 export const useBlogHook = () => {
     const [blogData, setBlogData] = useState([]);
     const [loading, setLoading] = useState(true);

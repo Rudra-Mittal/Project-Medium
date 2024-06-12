@@ -8,7 +8,6 @@ import { Profile } from './pages/Profile'
 import { UserBlogs } from './pages/userBlogs'
 import { Error } from './components/error'
 import './App.css'
-import {Auth} from "./pages/auth"
 import {RecoilRoot} from 'recoil'
 // import { BlogWriter } from './components/blogWriter'
 
@@ -19,7 +18,6 @@ function App() {
        <RecoilRoot>
       <Routes>
 
-       <Route path="/" element={<Auth/>}></Route>
        <Route path="/signup" element={<Signup/>}></Route>
         <Route path="/signin" element={<Signin/>}></Route>
         <Route path="/blog" element={<Blog/>}></Route>

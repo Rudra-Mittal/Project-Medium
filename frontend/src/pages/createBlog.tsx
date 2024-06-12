@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import { Appbar } from '../components/appbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { BACKEND_URL } from '../components/config.env';
+const  BACKEND_URL = process.env.BACKEND_URL;
 // import { BACKEND_URL } from '../config';
 export const CreateBlog=()=> {
   const [value, setValue] = useState('');
