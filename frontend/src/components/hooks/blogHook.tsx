@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-// import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../config.env";
 import axios from "axios";
 export const useBlogHook = () => {
     const [blogData, setBlogData] = useState([]);
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        axios.post(` http://localhost:8787/api/v1/blog/bulk`,{
+        axios.post(`${BACKEND_URL}/api/v1/blog/bulk`,{
             skip:0,
             take:100
         },{
@@ -28,7 +28,7 @@ export const useBlogSingleHook = ({id}:any) => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         console.log(id);
-        axios.get(`http://localhost:8787/api/v1/blog/${id}`,{
+        axios.get(`${BACKEND_URL}/api/v1/blog/${id}`,{
             headers:{
                 Authorization:localStorage.getItem("Authorization")
             }
@@ -49,7 +49,7 @@ export const useSingleUserBlogs = () => {
     const [loading, setLoading] = useState(true);
     const [error,setError]=useState(false);
     useEffect(() => {
-        axios.get(`http://localhost:8787/api/v1/blog`,{
+        axios.get(`${BACKEND_URL}/api/v1/blog`,{
             headers:{
                 Authorization:localStorage.getItem("Authorization")
             }

@@ -1,7 +1,7 @@
 import { useSingleUserBlogs } from "./hooks/blogHook";
 import { Skeleton } from "./Blogskeletons";
 import { BlogCard } from "./blogCard";
-import { BACKEND_URL } from "./config";
+import { BACKEND_URL } from "./config.env";
 import axios from "axios";
 import { useState } from "react";
 import  {useNavigate} from "react-router-dom";

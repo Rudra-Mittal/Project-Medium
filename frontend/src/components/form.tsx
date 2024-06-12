@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { Signup } from "@rudra_mittal/input-validation"
 import axios from "axios"
-import { BACKEND_URL } from "./config"
+import { BACKEND_URL } from "./config.env"
 import { useRecoilState } from "recoil"
 import { userStateAtom } from "../Store/atom"
 export const Form = ({ type }: { type: "signup" | "signin" }) => {
