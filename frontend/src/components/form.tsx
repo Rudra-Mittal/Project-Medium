@@ -14,9 +14,11 @@ export const Form = ({ type }: { type: "signup" | "signin" }) => {
         password: ""
     })
     const [userState, setUserState] = useRecoilState(userStateAtom);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const navigate = useNavigate();
     async function handleSubmit() {
+
         try{
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, inputs);
             localStorage.setItem("Authorization", res.data.jwt);

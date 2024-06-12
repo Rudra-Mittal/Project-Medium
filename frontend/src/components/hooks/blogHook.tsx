@@ -4,6 +4,7 @@ import axios from "axios";
 export const useBlogHook = () => {
     const [blogData, setBlogData] = useState([]);
     const [loading, setLoading] = useState(true);
+    
     useEffect(() => {
         axios.post(` http://localhost:8787/api/v1/blog/bulk`,{
             skip:0,
@@ -46,6 +47,7 @@ export const useBlogSingleHook = ({id}:any) => {
 export const useSingleUserBlogs = () => {
     const [blogData, setBlogData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error,setError]=useState(false);
     useEffect(() => {
         axios.get(`http://localhost:8787/api/v1/blog`,{
             headers:{
@@ -57,8 +59,9 @@ export const useSingleUserBlogs = () => {
         }
     ).catch((err)=>{
         console.log(err);
+        setError(true);
         setLoading(false);
         })
     }, []);
-    return { blogData, loading };
+    return { blogData, loading,error };
 }

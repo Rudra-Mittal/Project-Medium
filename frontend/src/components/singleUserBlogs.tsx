@@ -4,9 +4,10 @@ import { BlogCard } from "./blogCard";
 import { BACKEND_URL } from "./config";
 import axios from "axios";
 import { useState } from "react";
+import  {useNavigate} from "react-router-dom";
 export const SingleUserBlog = () => {
-    const {blogData,loading}=useSingleUserBlogs();
-    const [error,setError]=useState(false);
+    const navigate=useNavigate();
+    const {blogData,loading,error}=useSingleUserBlogs();
     const handleEdit=(e)=>{
         axios.delete(`${BACKEND_URL}/api/v1/blog`,{
             headers:{
@@ -19,7 +20,6 @@ export const SingleUserBlog = () => {
         }).then(()=>{
             window.location.reload();
         }).catch((e:any)=>{
-            setError(true);
             console.log(e);
         })
     }
@@ -40,11 +40,12 @@ export const SingleUserBlog = () => {
         )
     }
     if(error){
-        return(
-            <div>
-                <h1 className="">Some error occured</h1>
+        navigate("/signin",{preventScrollReset:true});
+        return (
+            <div className="flex items-center justify-center">
+                <h1 className="text-red-500 font-black">Some error occurred make sure you are logged in</h1>
             </div>
-        )
+        );
     }
     return (
         <div className="flex h-screen flex-row justify-center ">
@@ -59,6 +60,7 @@ export const SingleUserBlog = () => {
                 <div className="flex flex-col">
                 <BlogCard id={blog.id} authorImg="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg"  name={blog.author.name||"Guest"} title={blog.title} content={blog.content} date={(new Date(blog.createdAt))}/>
                 <button type="button" id={blog.id} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={handleEdit}>Delete</button>
+                <button type="button" id={blog.id} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={handleEdit}>Edit</button>
                 </div>
             )}
                 </div>

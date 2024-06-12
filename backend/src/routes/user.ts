@@ -29,7 +29,8 @@ userRouter.post('/signup', async (c) => {
     c.status(400);
     return c.json({error:error.message});
   }
-  try{const body = await c.req.json();
+  try{
+    const body = await c.req.json();
   const prisma = c.get("prisma");
     const user = await prisma.user.create({
       data: {
