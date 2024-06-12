@@ -12,7 +12,7 @@ export const CreateBlog=()=> {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
         const handlePublish = () => {
-            const res=axios.post(`${BACKEND_URL}/api/v1/blog`,{
+            axios.post(`${BACKEND_URL}/api/v1/blog`,{
                 title:title,
                 content:value
             },{

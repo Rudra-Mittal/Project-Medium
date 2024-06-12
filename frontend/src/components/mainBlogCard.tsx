@@ -6,7 +6,7 @@ interface BlogCardProps {
     content: string;
     date: Date;
 }
-export const MainBlogCard = ({ id,authorImg,name,title,content,date }: BlogCardProps) => {
+export const MainBlogCard = ({name,title,content,date }: BlogCardProps) => {
     return (
         <div className="grid grid-cols-12 w-full mt-14">
            <div className="px-5 col-span-12 lg:col-span-8">

@@ -8,7 +8,7 @@ const BACKEND_URL = process.env.BACKEND_URL;
 export const SingleUserBlog = () => {
     const navigate=useNavigate();
     const {blogData,loading,error}=useSingleUserBlogs();
-    const handleEdit=(e)=>{
+    const handleEdit=(e:any)=>{
         axios.delete(`${BACKEND_URL}/api/v1/blog`,{
             headers:{
                 Authorization:localStorage.getItem("Authorization")

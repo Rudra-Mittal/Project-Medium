@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { Signup } from "@rudra_mittal/input-validation"
 import axios from "axios"
-import { useRecoilState } from "recoil"
+import { useRecoilValue } from "recoil"
 import { userStateAtom } from "../Store/atom"
 const BACKEND_URL = process.env.BACKEND_URL;
 export const Form = ({ type }: { type: "signup" | "signin" }) => {
@@ -14,8 +14,7 @@ export const Form = ({ type }: { type: "signup" | "signin" }) => {
         email: "",
         password: ""
     })
-    const [userState, setUserState] = useRecoilState(userStateAtom);
-    const [loading, setLoading] = useState(false);
+    const userState = useRecoilValue(userStateAtom);
     const [error, setError] = useState(false);
     const navigate = useNavigate();
     async function handleSubmit() {
@@ -25,7 +24,7 @@ export const Form = ({ type }: { type: "signup" | "signin" }) => {
             localStorage.setItem("Authorization", res.data.jwt);
 
         // console.log(`${BACKEND_URL}/api/v1/user/${type}`);
-    }catch(e){
+    }catch(e:any){
         console.log(e.response.data.error);
         setError(true);
         return;

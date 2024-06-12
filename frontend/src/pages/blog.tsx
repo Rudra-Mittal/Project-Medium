@@ -4,7 +4,6 @@ import { useBlogHook } from "../components/hooks/blogHook"
 import { Skeleton } from "../components/Blogskeletons"
 // import { ProgressComponent } from "../components/progress"
 import { motion, useScroll, useSpring } from "framer-motion"
-import { useState } from "react"
 export const Blog=()=>{
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress);

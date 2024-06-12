@@ -23,6 +23,7 @@ export const BlogSingle=()=>{
         
         <div className="w-screen m-auto">
             <Appbar/>
+            {/* @ts-ignore */}
             <MainBlogCard id={blogData.id} name={blogData.author.name} authorImg="" title={blogData.title} content={blogData.content} date={(new Date(blogData.createdAt))} />
         </div>
     )
